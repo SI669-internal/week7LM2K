@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input, Button } from '@rneui/themed';
+import { ListContext } from "../context/ListContext";
 
 function DetailsScreen(props) {
 
-  const [ listItems, setListItems ] = props.appState;
+  const [ listItems, setListItems ] = useContext(ListContext);
   const { navigation, route } = props;
   const { itemKey } = route.params;
   const item = itemKey===-1 ? 

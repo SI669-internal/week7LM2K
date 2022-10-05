@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { StyleSheet, View, Text, FlatList, Button } from "react-native";
 import { FAB } from "@rneui/base";
 import ListItem from "../components/ListItem";
+import { ListContext } from "../context/ListContext";
 
 function HomeScreen(props) {
-  const [ listItems, setListItems ] = props.appState;
+  const [ listItems, setListItems ] = useContext(ListContext);
   const { navigation, route } = props;
 
   return(

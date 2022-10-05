@@ -1,11 +1,14 @@
 
+import { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
+import { ListContext } from '../context/ListContext';
 
 
 function ListItem(props) {
 
-  const [listItems, setListItems] = props.appState;
+  const [listItems, setListItems] = useContext(ListContext);
+
   const { item, navigation} = props;
 
   const deleteItem = (item) => {
