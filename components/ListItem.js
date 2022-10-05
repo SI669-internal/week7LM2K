@@ -1,8 +1,6 @@
 
-import { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
-import { ListContext } from '../context/ListContext';
 import { DELETE_ITEM } from '../Reducer';
 import { useSelector, useDispatch } from 'react-redux';
 

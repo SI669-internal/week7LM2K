@@ -6,12 +6,14 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import HomeScreen from './screens/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen';
-import { ListContext } from './context/ListContext';
 import { rootReducer } from './Reducer';
 
 const Stack = createNativeStackNavigator();
 
-const store = configureStore({reducer: rootReducer});
+
+const store = configureStore({
+  reducer: rootReducer, 
+});
 
 function AppContainer() {
 
