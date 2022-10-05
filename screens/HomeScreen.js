@@ -1,12 +1,12 @@
-import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { StyleSheet, View, Text, FlatList, Button } from "react-native";
 import { FAB } from "@rneui/base";
 import ListItem from "../components/ListItem";
-import { ListContext } from "../context/ListContext";
 
 function HomeScreen(props) {
-  const [ listItems, setListItems ] = useContext(ListContext);
+  
   const { navigation, route } = props;
+  const listItems = useSelector((state) => state.listItems);
 
   return(
     <View style={styles.container}>

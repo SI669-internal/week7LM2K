@@ -1,11 +1,15 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input, Button } from '@rneui/themed';
-import { ListContext } from "../context/ListContext";
+import { useSelector, useDispatch } from 'react-redux';
+
+import { ADD_ITEM, UPDATE_ITEM } from '../Reducer';
 
 function DetailsScreen(props) {
 
-  const [ listItems, setListItems ] = useContext(ListContext);
+  const listItems = useSelector((state) => state.listItems);
+  const dispatch = useDispatch();
+
   const { navigation, route } = props;
   const { itemKey } = route.params;
   const item = itemKey===-1 ? 
@@ -15,21 +19,22 @@ function DetailsScreen(props) {
   const [inputText, setInputText] = useState(item.text);
 
   const addItem = (newText) => {
-    let newItem = {
-      text: newText,
-      key: Date.now()
-    }
-    let newListItems = listItems.concat(newItem);
-    setListItems(newListItems);
+    dispatch({
+      type: ADD_ITEM,
+      payload: {
+        text: newText
+      }
+    });
   }
 
   const updateItem = (item, newText) => {
-    let newItem = {
-      text: newText,
-      key: item.key
-    };
-    let newListItems = listItems.map(elem=>elem.key===item.key?newItem:elem);
-    setListItems(newListItems);
+    dispatch({
+      type: UPDATE_ITEM,
+      payload: {
+        key: item.key,
+        text: newText
+      }
+    });
   }
 
   return (

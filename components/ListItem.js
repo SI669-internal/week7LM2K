@@ -3,17 +3,26 @@ import { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
 import { ListContext } from '../context/ListContext';
-
+import { DELETE_ITEM } from '../Reducer';
+import { useSelector, useDispatch } from 'react-redux';
 
 function ListItem(props) {
 
-  const [listItems, setListItems] = useContext(ListContext);
+  //const [listItems, setListItems] = useContext(ListContext);
 
+  const listItems = useSelector((state) => state.listItems);
+  const dispatch = useDispatch();
   const { item, navigation} = props;
 
   const deleteItem = (item) => {
-    let newListItems = listItems.filter(elem=>elem.key !== item.key);
-    setListItems(newListItems);
+    dispatch({
+      type: DELETE_ITEM,
+      payload: {
+        key: item.key
+      }
+    })
+    // let newListItems = listItems.filter(elem=>elem.key !== item.key);
+    // setListItems(newListItems);
   }
 
   return (
