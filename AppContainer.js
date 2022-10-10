@@ -14,15 +14,12 @@ function AppContainer() {
   ];
 
   const [listItems, setListItems] = useState(initListItems);
+  
   return(
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home' screenOptions={{ title: 'ListMaker 2000' }}>
-        <Stack.Screen name='Home'>
-          {(props) => <HomeScreen {...props} appState={[listItems, setListItems]} />}
-        </Stack.Screen>
-        <Stack.Screen name='Details'>
-          {(props) => <DetailsScreen {...props} appState={[listItems, setListItems]}/>}
-        </Stack.Screen>
+        <Stack.Screen name='Home' component={HomeScreen}/>
+        <Stack.Screen name='Details' component={DetailsScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -5,12 +5,9 @@ import { Button, Icon } from '@rneui/themed';
 
 function ListItem(props) {
 
-  const [listItems, setListItems] = props.appState;
   const { item, navigation} = props;
 
   const deleteItem = (item) => {
-    let newListItems = listItems.filter(elem=>elem.key !== item.key);
-    setListItems(newListItems);
   }
 
   return (
@@ -19,7 +16,7 @@ function ListItem(props) {
         style={styles.li1}
         onPress={()=>{
           navigation.navigate('Details', { 
-            itemKey: item.key 
+            item: item 
           });
         }}  
       >

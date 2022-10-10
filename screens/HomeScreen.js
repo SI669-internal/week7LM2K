@@ -1,9 +1,17 @@
-import { StyleSheet, View, Text, FlatList, Button } from "react-native";
+import { useState } from 'react';
+import { StyleSheet, View, FlatList } from "react-native";
 import { FAB } from "@rneui/base";
 import ListItem from "../components/ListItem";
 
 function HomeScreen(props) {
-  const [ listItems, setListItems ] = props.appState;
+  
+  const initListItems = [
+    { text: 'Get costume', key: Date.now() },
+    { text: 'Get candy', key: Date.now() + 1}
+  ];
+
+  const [listItems, setListItems] = useState(initListItems);
+
   const { navigation, route } = props;
 
   return(
@@ -13,7 +21,7 @@ function HomeScreen(props) {
           data={listItems}
           renderItem={({item})=>{
             return (
-              <ListItem appState={props.appState} item={item} navigation={navigation} />
+              <ListItem item={item} navigation={navigation} />
             );
           }}
         />
@@ -23,7 +31,7 @@ function HomeScreen(props) {
         color='darkblue'
         onPress={()=>{
           navigation.navigate('Details', {
-            itemKey:  -1
+            item: {key: -1, text: ''}
           });
         }}
       />

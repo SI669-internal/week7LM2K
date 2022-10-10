@@ -4,31 +4,15 @@ import { Input, Button } from '@rneui/themed';
 
 function DetailsScreen(props) {
 
-  const [ listItems, setListItems ] = props.appState;
   const { navigation, route } = props;
-  const { itemKey } = route.params;
-  const item = itemKey===-1 ? 
-    { text: '', key: -1 } :
-    listItems.find(elem=>elem.key === itemKey);
+  const { item } = route.params;
 
   const [inputText, setInputText] = useState(item.text);
 
   const addItem = (newText) => {
-    let newItem = {
-      text: newText,
-      key: Date.now()
-    }
-    let newListItems = listItems.concat(newItem);
-    setListItems(newListItems);
   }
 
   const updateItem = (item, newText) => {
-    let newItem = {
-      text: newText,
-      key: item.key
-    };
-    let newListItems = listItems.map(elem=>elem.key===item.key?newItem:elem);
-    setListItems(newListItems);
   }
 
   return (
