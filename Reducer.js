@@ -4,14 +4,6 @@ const UPDATE_ITEM = 'UPDATE_ITEM';
 const DELETE_ITEM = 'DELETE_ITEM';
 
 
-const initListItems = [
-  { text: 'Get costume', key: Date.now() },
-  { text: 'Get candy', key: Date.now() + 1}
-];
-
-const initialState = {
-  listItems: initListItems
-}
 
 const addItem = (state, newText) => {
   let { listItems } = state;
@@ -45,6 +37,15 @@ const deleteItem = (state, itemId) => {
     ...state, 
     listItems: newListItems
   }
+}
+
+const initListItems = [
+  { text: 'Get costume', key: Date.now() },
+  { text: 'Get candy', key: Date.now() + 1}
+];
+
+const initialState = {
+  listItems: initListItems
 }
 
 function rootReducer(state=initialState, action) {

@@ -25,7 +25,7 @@ function HomeScreen(props) {
         color='darkblue'
         onPress={()=>{
           navigation.navigate('Details', {
-            itemKey:  -1
+            item: { key:  -1, text: ''}
           });
         }}
       />

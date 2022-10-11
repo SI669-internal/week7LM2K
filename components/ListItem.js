@@ -6,9 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 function ListItem(props) {
 
-  //const [listItems, setListItems] = useContext(ListContext);
-
-  const listItems = useSelector((state) => state.listItems);
   const dispatch = useDispatch();
   const { item, navigation} = props;
 
@@ -19,8 +16,6 @@ function ListItem(props) {
         key: item.key
       }
     })
-    // let newListItems = listItems.filter(elem=>elem.key !== item.key);
-    // setListItems(newListItems);
   }
 
   return (
@@ -29,7 +24,7 @@ function ListItem(props) {
         style={styles.li1}
         onPress={()=>{
           navigation.navigate('Details', { 
-            itemKey: item.key 
+            item: item 
           });
         }}  
       >

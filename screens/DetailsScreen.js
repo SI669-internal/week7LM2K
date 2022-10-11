@@ -7,14 +7,10 @@ import { ADD_ITEM, UPDATE_ITEM } from '../Reducer';
 
 function DetailsScreen(props) {
 
-  const listItems = useSelector((state) => state.listItems);
   const dispatch = useDispatch();
 
   const { navigation, route } = props;
-  const { itemKey } = route.params;
-  const item = itemKey===-1 ? 
-    { text: '', key: -1 } :
-    listItems.find(elem=>elem.key === itemKey);
+  const { item } = route.params;
 
   const [inputText, setInputText] = useState(item.text);
 
