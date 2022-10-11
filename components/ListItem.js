@@ -19,7 +19,7 @@ function ListItem(props) {
         style={styles.li1}
         onPress={()=>{
           navigation.navigate('Details', { 
-            itemKey: item.key 
+            item: item 
           });
         }}  
       >
