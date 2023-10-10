@@ -8,13 +8,6 @@ const Stack = createNativeStackNavigator();
 
 function AppContainer() {
 
-  const initListItems = [
-    { text: 'Get costume', key: Date.now() },
-    { text: 'Get candy', key: Date.now() + 1}
-  ];
-
-  const [listItems, setListItems] = useState(initListItems);
-  
   return(
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home' screenOptions={{ title: 'ListMaker 2000' }}>
