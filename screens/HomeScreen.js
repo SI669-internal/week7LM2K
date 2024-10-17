@@ -6,7 +6,7 @@ import ListItem from "../components/ListItem";
 function HomeScreen(props) {
   
   const { navigation, route } = props;
-  const listItems = useSelector((state) => state.listItems);
+  const listItems = useSelector((state) =>  state.todos.value);
 
   return(
     <View style={styles.container}>

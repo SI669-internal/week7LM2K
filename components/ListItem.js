@@ -1,22 +1,13 @@
 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
-import { DELETE_ITEM } from '../Reducer';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import {deleteItem} from "../features/todoSlice";
 
 function ListItem(props) {
 
   const dispatch = useDispatch();
   const { item, navigation} = props;
-
-  const deleteItem = (item) => {
-    dispatch({
-      type: DELETE_ITEM,
-      payload: {
-        key: item.key
-      }
-    })
-  }
 
   return (
     <View style={styles.listItemContainer}>
@@ -33,7 +24,7 @@ function ListItem(props) {
       <TouchableOpacity 
         style={styles.li3}
         onPress={()=>{
-          deleteItem(item);
+          dispatch(deleteItem(item));
         }}  
       >
         <Icon 
