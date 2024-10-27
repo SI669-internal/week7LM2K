@@ -1,10 +1,18 @@
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { StyleSheet, View, Text, FlatList, Button } from "react-native";
 import { FAB } from "@rneui/base";
 import ListItem from "../components/ListItem";
+import {useEffect} from "react";
+import {getItemsFromFirebase} from "../features/todoSlice";
 
 function HomeScreen(props) {
-  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('TRY 2 GET ITEMS FROM FB');
+    dispatch(getItemsFromFirebase())
+  }, []);
+
   const { navigation, route } = props;
   const listItems = useSelector((state) =>  state.todos.value);
 

@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import {getItemsFromFirebase} from "./features/todoSlice";
 import HomeScreen from './screens/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import store from './app/store';
 
 const Stack = createNativeStackNavigator();
@@ -12,7 +12,6 @@ const Stack = createNativeStackNavigator();
 
 
 function AppContainer() {
-
   return(
     <Provider store={store}>
       <NavigationContainer>

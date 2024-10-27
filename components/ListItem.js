@@ -2,7 +2,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
 import { useDispatch } from 'react-redux';
-import {deleteItem} from "../features/todoSlice";
+import {deleteItem, deleteItemFromFirebase} from "../features/todoSlice";
 
 function ListItem(props) {
 
@@ -24,7 +24,7 @@ function ListItem(props) {
       <TouchableOpacity 
         style={styles.li3}
         onPress={()=>{
-          dispatch(deleteItem(item));
+          dispatch(deleteItemFromFirebase(item));
         }}  
       >
         <Icon 
