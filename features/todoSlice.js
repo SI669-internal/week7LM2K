@@ -1,81 +1,51 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { firebaseConfig } from "../Secrets";
-
 import { initializeApp } from 'firebase/app';
-
 import { getFirestore, collection, query,
   doc, getDocs, updateDoc, addDoc, deleteDoc,
 } from "firebase/firestore";
 
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export const addItemPlusFirebase = createAsyncThunk(
+export const addItemThunk = createAsyncThunk(
   'todofirebase/addItem',
   async (todoText) => {
-    try {
-      const newTodo = {
-        text: todoText,
-      }
-
-      const todoCollRef = collection(db, 'todos');
-      const todoSnap = await addDoc(todoCollRef, newTodo);
-      newTodo.key = todoSnap.id;
-      return newTodo;
-    } catch (error) {
-      throw error;
-    }
+    const todoCollRef = collection(db, 'todos');
+    const todoSnap = await addDoc(todoCollRef, {text: todoText});
+    return {key: todoSnap.id, text: todoText};
   }
 )
 
-export const getItemsFromFirebase = createAsyncThunk(
+export const getTodosThunk = createAsyncThunk(
  'todofirebase/getItems',
   async () => {
-   console.log('GET ITEMS!')
-   try {
-     const initList = [];
-     const collRef = collection(db, 'todos');
-     const q = query(collRef);
-     const querySnapshot = await getDocs(q);
-     querySnapshot.docs.forEach((docSnapshot)=>{
-       const todo = docSnapshot.data();
-       console.log(todo);
-       todo.key = docSnapshot.id;
-       initList.push(todo);
-     });
-     console.log('INIT LIST', initList)
-     return initList;
-   } catch (error) {
-     throw error;
-   }
-
+    const initList = [];
+    const collRef = collection(db, 'todos');
+    const q = query(collRef);
+    const querySnapshot = await getDocs(q);
+    querySnapshot.docs.forEach((docSnapshot)=>{
+      const todo = docSnapshot.data();
+      todo.key = docSnapshot.id;
+      initList.push(todo);
+    });
+    return initList;
   }
 )
 
-export const deleteItemFromFirebase = createAsyncThunk(
+export const deleteItemThunk = createAsyncThunk(
   'todofirebase/deleteItem',
   async (todo) => {
-    try {
-      const docToDelete = doc(db, 'todos', todo.key);
-      await deleteDoc(docToDelete);
-      return todo;
-    } catch (error) {
-      throw error;
-    }
+    return todo
   }
 )
 
-export const updateItemFromFirebase = createAsyncThunk(
+export const updateItemThunk = createAsyncThunk(
   'todofirebase/updateItem',
   async ({item, inputText}) => {
     const newTodo = { ...item, text: inputText};
-    // let newTodos = todos.map(elem=>elem.key===todo.key?newTodo:elem);
-    const doctoUpdate = doc(db, 'todos', todo.key);
-    await updateDoc(doctoUpdate, {text: newText});
     return newTodo;
   }
-
 )
 
 export const todoSlice = createSlice({
@@ -103,56 +73,50 @@ export const todoSlice = createSlice({
     //     newListItem
     //   ];
     // },
-    updateItem: (state, action) => {
-        const {item, inputText} = action.payload
-      const newItem = {
-        text: inputText,
-        key: item.key
-      };
-
-      state.value = state.value.map(
-        elem => elem.key === newItem.key ? newItem : elem
-      )
-    },
+    // updateItem: (state, action) => {
+    //     const {item, inputText} = action.payload
+    //   const newItem = {
+    //     text: inputText,
+    //     key: item.key
+    //   };
+    //
+    //   state.value = state.value.map(
+    //     elem => elem.key === newItem.key ? newItem : elem
+    //   )
+    // },
     // deleteItem: (state, action) => {
     //   const itemId = action.payload.key
     //   state.value = state.value.filter(elem=>elem.key !== itemId);
     // },
   },
   extraReducers: (builder) => {
-    builder.addCase(addItemPlusFirebase.pending, (state, action) => {
-      console.log('PRNDIN', action)
-    })
-    builder.addCase(addItemPlusFirebase.rejected, (state, action) => {
-      console.log('REJEc', action.error.message)
-    })
-    builder.addCase(addItemPlusFirebase.fulfilled, (state, action) => {
-      state.value = [
-        ...state.value,
-        action.payload,
-      ];
-    })
-    builder.addCase(getItemsFromFirebase.fulfilled, (state, action) => {
-      console.log("GET ITEMS PAYLOAD!", action.payload)
-      state.value = action.payload
-    })
-    builder.addCase(getItemsFromFirebase.pending, (state, action) => {
-      console.log("GET ITEMS Pending!", action)
-    })
-    builder.addCase(getItemsFromFirebase.rejected, (state, action) => {
-      console.log("GET ITEMS Rejactedr!", action)
-    })
-    builder.addCase(deleteItemFromFirebase.fulfilled, (state, action) => {
-      const itemId = action.payload.key
-      state.value = state.value.filter(elem=>elem.key !== itemId);
-    })
-    builder.addCase(updateItemFromFirebase.fulfilled, (state, action) => {
+    builder.addCase(updateItemThunk.fulfilled, (state, action) => {
       const newItem = action.payload
       state.value = state.value.map(
         elem => elem.key === newItem.key ? newItem : elem
       )
     })
 
+    builder.addCase(addItemThunk.fulfilled, (state, action) => {
+      state.value = [
+        ...state.value,
+        action.payload,
+      ];
+    })
+
+    builder.addCase(deleteItemThunk.fulfilled, (state, action) => {
+      const itemId = action.payload.key
+      state.value = state.value.filter(elem=>elem.key !== itemId);
+    })
+    // builder.addCase(updateItemThunk.fulfilled, (state, action) => {
+    //   const newItem = action.payload
+    //   state.value = state.value.map(
+    //     elem => elem.key === newItem.key ? newItem : elem
+    //   )
+    // })
+    builder.addCase(getTodosThunk.fulfilled, (state, action) => {
+      state.value = action.payload
+    })
   }
 })
 

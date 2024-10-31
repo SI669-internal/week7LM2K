@@ -2,7 +2,7 @@ import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input, Button } from '@rneui/themed';
 import { useSelector, useDispatch } from 'react-redux';
-import {addItem, updateItem, addItemPlusFirebase} from "../features/todoSlice";
+import {addItemThunk, updateItemThunk} from "../features/todoSlice";
 
 function DetailsScreen(props) {
 
@@ -34,9 +34,12 @@ function DetailsScreen(props) {
           title='Save'
           onPress={()=>{
             if (item.key === -1) {
-              dispatch(addItemPlusFirebase(inputText));
+              dispatch(addItemThunk(inputText));
+              // dispatch(addItem(inputText));
             } else {
-              dispatch(updateItem({item, inputText}));
+              //dispatch(updateItem({item, inputText}));
+
+              dispatch(updateItemThunk({item, inputText}));
             }
             navigation.goBack();
           }}
