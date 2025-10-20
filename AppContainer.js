@@ -1,8 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useState } from 'react';
+
 import HomeScreen from './screens/HomeScreen';
 import DetailsScreen from './screens/DetailsScreen';
-import { useState } from 'react';
+import { ListContext } from './context/ListContext';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -16,21 +19,19 @@ function AppContainer() {
   const [listItems, setListItems] = useState(initListItems);
 
   return(
-    <NavigationContainer>
-      <Stack.Navigator 
-        initialRouteName='Home' 
-        screenOptions={
-          { 
-            title: 'ListMaker 2000',
-          }}>
-        <Stack.Screen name='Home'>
-          {(props) => <HomeScreen {...props} appState={[listItems, setListItems]}/> }
-        </Stack.Screen>
-        <Stack.Screen name='Details'>
-          {(props) => <DetailsScreen {...props} appState={[listItems, setListItems]}/> }
-        </Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ListContext.Provider value={[listItems, setListItems]}>
+      <NavigationContainer>
+        <Stack.Navigator 
+          initialRouteName='Home' 
+          screenOptions={
+            { 
+              title: 'ListMaker 2000',
+            }}>
+          <Stack.Screen name='Home' component={HomeScreen}/>   
+          <Stack.Screen name='Details' component={DetailsScreen}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ListContext.Provider>
   );
 }
 

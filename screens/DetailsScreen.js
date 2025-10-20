@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input, Button } from '@rneui/base';
+import { ListContext } from "../context/ListContext";
 
-function DetailsScreen({navigation, route, appState}) {
+function DetailsScreen({navigation, route}) {
 
-  const [ listItems, setListItems ] = appState;
+  const [ listItems, setListItems ] = useContext(ListContext);
   const { item } = route.params;
 
   const [inputText, setInputText] = useState(item.text);
 
   const addItem = (newText) => {
-    const newListItems = [...listItems];
-    newListItems.push({text: newText, key: Date.now()});
+    const newListItems = [...listItems, {text: newText, key: Date.now()}];
     setListItems(newListItems);
   }
 

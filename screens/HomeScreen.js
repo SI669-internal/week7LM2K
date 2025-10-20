@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import { StyleSheet, View, FlatList } from "react-native";
 import { FAB } from "@rneui/base";
 import ListItem from "../components/ListItem";
+import { ListContext } from '../context/ListContext';
 
-function HomeScreen({navigation, route, appState}) {
-  const [ listItems, setListItems ] = appState;
+function HomeScreen({navigation, route}) {
+  const [ listItems, setListItems ] = useContext(ListContext);
 
   return(
     <View style={styles.container}>
@@ -16,7 +17,6 @@ function HomeScreen({navigation, route, appState}) {
               <ListItem 
                 item={item} 
                 navigation={navigation} 
-                appState={appState}
               />
             );
           }}

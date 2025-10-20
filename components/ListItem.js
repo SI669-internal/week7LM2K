@@ -1,11 +1,13 @@
 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useContext } from 'react';
+import { ListContext } from '../context/ListContext';
 
 
-function ListItem({item, navigation, appState}) {
+function ListItem({item, navigation}) {
 
-  const [listItems, setListItems] = appState;
+  const [listItems, setListItems] = useContext(ListContext);
 
   const deleteItem = (item) => {
     const newListItems = listItems.filter(it => it.key !== item.key);
