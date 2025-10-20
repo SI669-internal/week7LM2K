@@ -1,6 +1,6 @@
 
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Button, Icon } from '@rneui/themed';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 
 function ListItem(props) {
@@ -12,15 +12,18 @@ function ListItem(props) {
 
   return (
     <View style={styles.listItemContainer}>
+      <View style={styles.li1}>
+        <Text style={styles.listItemText}>{item.text}</Text>
+      </View>
       <TouchableOpacity 
-        style={styles.li1}
+        style={styles.li2}
         onPress={()=>{
           navigation.navigate('Details', { 
             item: item 
           });
         }}  
       >
-        <Text style={styles.listItemText}>{item.text}</Text>
+        <MaterialIcons name="edit" size={24} color="black" />
       </TouchableOpacity>
       <TouchableOpacity 
         style={styles.li3}
@@ -28,9 +31,8 @@ function ListItem(props) {
           deleteItem(item);
         }}  
       >
-        <Icon 
-          name="trash"
-          type="font-awesome"
+        <MaterialIcons 
+          name="delete"
           color="black"
           size={25}
         />
@@ -45,6 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
+    backgroundColor: 'white',
     padding: '1%',
   },
   li1: {
@@ -56,6 +59,10 @@ const styles = StyleSheet.create({
   },
   li2: {
     flex: 0.2,
+    backgroundColor: 'white'
+  },
+  li3: {
+    flex: 0.1,
     backgroundColor: 'white'
   },
   listItemText: {

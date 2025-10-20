@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Input, Button } from '@rneui/themed';
+import { Input, Button } from '@rneui/base';
 
 function DetailsScreen(props) {
 
