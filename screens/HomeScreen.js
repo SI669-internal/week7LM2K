@@ -3,16 +3,8 @@ import { StyleSheet, View, FlatList } from "react-native";
 import { FAB } from "@rneui/base";
 import ListItem from "../components/ListItem";
 
-function HomeScreen(props) {
-  
-  const initListItems = [
-    { text: 'Get costume', key: Date.now() },
-    { text: 'Get candy', key: Date.now() + 1}
-  ];
-
-  const [listItems, setListItems] = useState(initListItems);
-
-  const { navigation, route } = props;
+function HomeScreen({navigation, route, appState}) {
+  const [ listItems, setListItems ] = appState;
 
   return(
     <View style={styles.container}>
@@ -21,7 +13,11 @@ function HomeScreen(props) {
           data={listItems}
           renderItem={({item})=>{
             return (
-              <ListItem item={item} navigation={navigation} />
+              <ListItem 
+                item={item} 
+                navigation={navigation} 
+                appState={appState}
+              />
             );
           }}
         />

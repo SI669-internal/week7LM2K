@@ -3,11 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 
-function ListItem(props) {
+function ListItem({item, navigation, appState}) {
 
-  const { item, navigation} = props;
+  const [listItems, setListItems] = appState;
 
   const deleteItem = (item) => {
+    const newListItems = listItems.filter(it => it.key !== item.key);
+    setListItems(newListItems);
   }
 
   return (

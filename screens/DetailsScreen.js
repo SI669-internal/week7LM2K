@@ -2,17 +2,22 @@ import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input, Button } from '@rneui/base';
 
-function DetailsScreen(props) {
+function DetailsScreen({navigation, route, appState}) {
 
-  const { navigation, route } = props;
+  const [ listItems, setListItems ] = appState;
   const { item } = route.params;
 
   const [inputText, setInputText] = useState(item.text);
 
   const addItem = (newText) => {
+    const newListItems = [...listItems];
+    newListItems.push({text: newText, key: Date.now()});
+    setListItems(newListItems);
   }
 
   const updateItem = (item, newText) => {
+    const newListItems = listItems.map(it => it.key === item.key ? {text: newText, key: it.key} : it);
+    setListItems(newListItems);
   }
 
   return (
